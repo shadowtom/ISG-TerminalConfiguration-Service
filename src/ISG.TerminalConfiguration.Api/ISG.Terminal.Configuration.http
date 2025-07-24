@@ -1,0 +1,6 @@
+@ISG.Terminal.Configuration_HostAddress = http://localhost:5016
+
+GET {{ISG.Terminal.Configuration_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
