@@ -52,5 +52,14 @@ namespace ISG.TerminalConfiguration.Domain.Services
                 await terminalInfoRepository.UpdateTerminalSecurityAsync(terminalSecurity);
             }
         }
+
+        public Task AddNewTerminalTokenAsync(TerminalSecurity terminalSecurity)
+        {
+            if (terminalSecurity == null)
+            {
+                throw new ArgumentNullException(nameof(terminalSecurity), "Terminal security cannot be null.");
+            }
+            return terminalInfoRepository.AddTerminalSecurityAsync(terminalSecurity);
+        }
     }
 }

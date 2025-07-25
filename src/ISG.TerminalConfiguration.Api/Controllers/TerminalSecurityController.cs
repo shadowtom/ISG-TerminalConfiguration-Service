@@ -1,4 +1,5 @@
-﻿using ISG.TerminalConfiguration.Domain.Interfaces.Services;
+﻿using ISG.TerminalConfiguration.Api.DTO.Requests;
+using ISG.TerminalConfiguration.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ISG.TerminalConfiguration.Api.Controllers
@@ -47,6 +48,20 @@ namespace ISG.TerminalConfiguration.Api.Controllers
                 return BadRequest($"Error validating terminal security: {ex.Message}");
             }
 
+        }
+        [HttpPost("AddNewTerminalToken")]
+        public async Task<IActionResult> AddNewTerminalToken([FromBody] TerminalSecurityRequestDTO securityRequestDTO)
+        {
+            try
+            {
+
+                await _terminalSecurityService.AddNewTerminalTokenAsync(Mappers.TerminalSecurityMapper.mapToTerminalSecurity(securityRequestDTO));
+                return Ok("New terminal token added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error adding new terminal token: {ex.Message}");
+            }
         }
     }
 }

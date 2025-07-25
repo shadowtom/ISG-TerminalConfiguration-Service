@@ -74,8 +74,19 @@ namespace ISG.TerminalConfiguration.Infrastructure.Repositories
             return terminalSecurity;
         }
         public async Task UpdateTerminalSecurityAsync(TerminalSecurity terminalSecurity)
-        {
-            _context.Entry(terminalSecurity).State = EntityState.Modified;
+        {    // Find the tracked entity
+            var entity = await _context.TerminalSecurities.FindAsync(terminalSecurity.id);
+
+            if (entity == null)
+            {
+                throw new Exception("Terminal security record not found");
+            }
+
+            // Update the entity's properties
+            entity.token = terminalSecurity.token;
+            entity.expirationDate = terminalSecurity.expirationDate;
+            entity.TerminalId = new Guid(terminalSecurity.TerminalId);
+
             await _context.SaveChangesAsync();
         }
         public async Task AddTerminalSecurityAsync(TerminalSecurity terminalSecurity)
